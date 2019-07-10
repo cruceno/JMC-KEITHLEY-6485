@@ -41,8 +41,9 @@ dev = Picoamperimeter(ser)
 dev.check_scpi_error()
 # dev.write(b'*RST\n')
 # dev.conn.write(b'CONF:CURR')
+
 # Proceso de correccion de zero
-dev.conn.write(b'SYST:ZCOR ON\n')
+dev.conn.write(b'SYST:ZCH ON\n')
 dev.check_scpi_error()
 time.sleep(1)
 dev.conn.write(b'SENS:MED ON\n')
@@ -70,11 +71,6 @@ dev.conn.write(b'SYST:ZCOR ON\n')
 dev.check_scpi_error()
 time.sleep(1)
 
-
-# dev.conn.write(b'CURR:RANG:AUTO 1\n')
-# dev.check_scpi_error()
-# time.sleep(1)
-
 # Conectar fuente de señal antes de seguir.
 dev.conn.write(b'SYST:ZCH OFF\n')
 dev.check_scpi_error()
@@ -90,7 +86,7 @@ time.sleep(1)
 # samples = 100
 # dev.write('ARM:COUN {}\n'.format(str(samples)).encode())
 # dev.check_scpi_error()
-time.sleep(1)
+# time.sleep(1)
 
 dev.write(b'FORM:ELEM READ,TIME\n')
 dev.check_scpi_error()
@@ -120,6 +116,7 @@ while t <= 180:
 # values = measure[values]
 # timestamps = measure[timestamps]
 # start = float(timestamps[0])
+
 timestamps = [float(v) for v in timestamps]
 values = [float(val) for val in values]
 # print(timestamps, values)
