@@ -1,6 +1,6 @@
 import serial
 import time
-serial.Serial.read
+import matplotlib.pyplot as plt
 
 class Picoamperimeter():
 
@@ -29,7 +29,6 @@ class Picoamperimeter():
         self.conn.write(b'INIT')
 
 
-
 ser = serial.Serial('/dev/ttyUSB0',
                     baudrate=19200,
                     stopbits=serial.STOPBITS_ONE,
@@ -43,7 +42,13 @@ dev.check_scpi_error()
 # dev.write(b'*RST\n')
 # dev.conn.write(b'CONF:CURR')
 # Proceso de correccion de zero
-dev.conn.write(b'SYST:ZCH ON\n')
+dev.conn.write(b'SYST:ZCOR ON\n')
+dev.check_scpi_error()
+time.sleep(1)
+dev.conn.write(b'SENS:MED ON\n')
+dev.check_scpi_error()
+time.sleep(1)
+dev.conn.write(b'SENS:AVER:ADV ON\n')
 dev.check_scpi_error()
 time.sleep(1)
 dev.conn.write(b'CURR:RANG 2e-9\n')
@@ -64,9 +69,11 @@ time.sleep(1)
 dev.conn.write(b'SYST:ZCOR ON\n')
 dev.check_scpi_error()
 time.sleep(1)
-dev.conn.write(b'CURR:RANG:AUTO 1\n')
-dev.check_scpi_error()
-time.sleep(1)
+
+
+# dev.conn.write(b'CURR:RANG:AUTO 1\n')
+# dev.check_scpi_error()
+# time.sleep(1)
 
 # Conectar fuente de señal antes de seguir.
 dev.conn.write(b'SYST:ZCH OFF\n')
@@ -76,26 +83,52 @@ time.sleep(1)
 
 
 # dev.write(b'ARM:SOUR IMM')
-samples = 100
-
-dev.write('ARM:COUN {}\n'.format(str(samples)).encode())
+dev.conn.write(b'CURR:RANG:AUTO 1\n')
 dev.check_scpi_error()
 time.sleep(1)
+#TODO: Calcular datos por segundo segun velocidad de adquisicion y filtros utilizados
+# samples = 100
+# dev.write('ARM:COUN {}\n'.format(str(samples)).encode())
+# dev.check_scpi_error()
+time.sleep(1)
+
 dev.write(b'FORM:ELEM READ,TIME\n')
 dev.check_scpi_error()
-time.sleep(1)
-dev.conn.write(b'READ?\n')
-measure = ""
+
+print("Comienza medicion")
 time.sleep(3)
+start = time.time()
+t = 0
+timestamps = []
+values = []
+while t <= 180:
+    dev.conn.write(b'READ?\n')
 
-measure = dev.conn.read_until(terminator=b'\n').decode().split(',')
+    read = dev.conn.readline().decode()
+    t = time.time() - start
+    val, timestamp = read.strip('\n').split(',')
 
-dev.conn.write(b'SYST:ZCH ON\n')
-values = slice(0, samples, 2)
-timestamps = slice(1, samples+1, 2)
-values = measure[values]
-timestamps = measure[timestamps]
-start = float(timestamps[0])
-timestamps = [float(v)-start for v in timestamps]
+    timestamps.append(t)
+    values.append(val)
+
+    print(t, timestamp, val)
+
+# measure = dev.conn.read_until(terminator=b'\n').decode().split(',')
+# dev.conn.write(b'SYST:ZCH ON\n')
+# values = slice(0, samples, 2)
+# timestamps = slice(1, samples+1, 2)
+# values = measure[values]
+# timestamps = measure[timestamps]
+# start = float(timestamps[0])
+timestamps = [float(v) for v in timestamps]
 values = [float(val) for val in values]
+# print(timestamps, values)
 print(timestamps, values)
+f = open('medicion.dat', 'w')
+lines = []
+for t, v in zip(timestamps, values):
+    lines.append("{}\t{}".format(t,v))
+f.write("\n".join(lines))
+
+plt.plot(timestamps, values)
+plt.show()
