@@ -21,59 +21,27 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="1">
-     <spacer name="horizontalSpacer">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
+    <item row="3" column="9" rowspan="2">
+     <widget class="QPushButton" name="pb_save_measure">
+      <property name="minimumSize">
        <size>
-        <width>40</width>
-        <height>20</height>
+        <width>0</width>
+        <height>75</height>
        </size>
       </property>
-     </spacer>
-    </item>
-    <item row="2" column="2" colspan="5">
-     <widget class="QLabel" name="lb_progress">
       <property name="text">
-       <string/>
+       <string>Save Measure</string>
       </property>
      </widget>
     </item>
-    <item row="3" column="1" colspan="6">
-     <widget class="QProgressBar" name="pb_scaning">
+    <item row="4" column="1" colspan="8">
+     <widget class="QProgressBar" name="pb_reading">
       <property name="value">
        <number>0</number>
       </property>
      </widget>
     </item>
-    <item row="0" column="3">
-     <widget class="QGroupBox" name="groupBox_2">
-      <property name="title">
-       <string>T</string>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_6">
-       <item row="0" column="1">
-        <widget class="QLCDNumber" name="lcdNumber_2">
-         <property name="minimumSize">
-          <size>
-           <width>120</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="smallDecimalPoint">
-          <bool>false</bool>
-         </property>
-         <property name="digitCount">
-          <number>5</number>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="2" column="1">
+    <item row="3" column="1">
      <widget class="QLabel" name="label">
       <property name="maximumSize">
        <size>
@@ -86,7 +54,70 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="1" colspan="6">
+    <item row="3" column="2" colspan="7">
+     <widget class="QLabel" name="lb_progress">
+      <property name="text">
+       <string>Reading #</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="8">
+     <widget class="QGroupBox" name="gb_main_value">
+      <property name="title">
+       <string>Picoamperimeter</string>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_5">
+       <item row="0" column="1">
+        <widget class="QLCDNumber" name="lcd_main_value">
+         <property name="minimumSize">
+          <size>
+           <width>150</width>
+           <height>75</height>
+          </size>
+         </property>
+         <property name="smallDecimalPoint">
+          <bool>false</bool>
+         </property>
+         <property name="digitCount">
+          <number>7</number>
+         </property>
+         <property name="value" stdset="0">
+          <double>0.666666000000000</double>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="0" column="9">
+     <widget class="QGroupBox" name="gb_aux_value">
+      <property name="title">
+       <string>Multimeter</string>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_8">
+       <item row="0" column="1">
+        <widget class="QLCDNumber" name="lcd_aux_value">
+         <property name="minimumSize">
+          <size>
+           <width>150</width>
+           <height>75</height>
+          </size>
+         </property>
+         <property name="smallDecimalPoint">
+          <bool>false</bool>
+         </property>
+         <property name="digitCount">
+          <number>7</number>
+         </property>
+         <property name="value" stdset="0">
+          <double>0.666666000000000</double>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="1" column="1" colspan="9">
      <widget class="QTabWidget" name="tw_plot_and_data">
       <property name="currentIndex">
        <number>0</number>
@@ -119,45 +150,7 @@
       </widget>
      </widget>
     </item>
-    <item row="0" column="5">
-     <widget class="QGroupBox" name="groupBox_3">
-      <property name="title">
-       <string>Zero</string>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_8">
-       <item row="0" column="1">
-        <widget class="QLCDNumber" name="lcdNumber_3">
-         <property name="minimumSize">
-          <size>
-           <width>120</width>
-           <height>0</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="0" column="4">
-     <widget class="QGroupBox" name="groupBox">
-      <property name="title">
-       <string>Ampers</string>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_5">
-       <item row="0" column="1">
-        <widget class="QLCDNumber" name="lcdNumber">
-         <property name="minimumSize">
-          <size>
-           <width>120</width>
-           <height>75</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="0" column="0" rowspan="4">
+    <item row="0" column="0" rowspan="5">
      <widget class="QTabWidget" name="tabWidget">
       <property name="maximumSize">
        <size>
@@ -176,92 +169,154 @@
         <string>Parameters</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_7">
+        <item row="5" column="1" colspan="2">
+         <widget class="QComboBox" name="cbx_aver_mode"/>
+        </item>
         <item row="1" column="0">
          <widget class="QLabel" name="label_2">
           <property name="text">
-           <string>Com port</string>
+           <string>Picoamperimeter</string>
           </property>
          </widget>
         </item>
-        <item row="2" column="1">
-         <widget class="QComboBox" name="comboBox_2"/>
-        </item>
-        <item row="15" column="0">
-         <widget class="QPushButton" name="pushButton">
-          <property name="text">
-           <string>Zero</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="0">
-         <widget class="QCheckBox" name="checkBox">
-          <property name="text">
-           <string>Zero correction</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="1">
-         <widget class="QComboBox" name="comboBox_3"/>
-        </item>
-        <item row="15" column="1">
-         <widget class="QPushButton" name="pushButton_2">
+        <item row="32" column="0" colspan="5">
+         <widget class="QPushButton" name="pb_run">
           <property name="text">
            <string>Run</string>
           </property>
          </widget>
         </item>
-        <item row="3" column="0">
-         <widget class="QLabel" name="label_3">
-          <property name="text">
-           <string>Speed</string>
+        <item row="13" column="0" colspan="5">
+         <widget class="Line" name="line_4">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
           </property>
          </widget>
         </item>
-        <item row="2" column="0">
+        <item row="29" column="0" colspan="5">
+         <widget class="Line" name="line">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
          <widget class="QLabel" name="label_5">
           <property name="text">
            <string>Range</string>
           </property>
          </widget>
         </item>
-        <item row="14" column="0">
-         <spacer name="verticalSpacer">
+        <item row="16" column="0" colspan="5">
+         <widget class="Line" name="line_5">
           <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="1" column="1">
-         <widget class="QComboBox" name="comboBox"/>
-        </item>
-        <item row="16" column="0" colspan="2">
-         <widget class="QPushButton" name="pushButton_3">
-          <property name="text">
-           <string>Save</string>
+           <enum>Qt::Horizontal</enum>
           </property>
          </widget>
         </item>
-        <item row="6" column="0">
-         <widget class="QCheckBox" name="checkBox_3">
+        <item row="15" column="1" colspan="4">
+         <widget class="QComboBox" name="cbx_aux_range"/>
+        </item>
+        <item row="14" column="0">
+         <widget class="QLabel" name="label_9">
           <property name="text">
-           <string>Average filter</string>
+           <string>Multimeter</string>
+          </property>
+         </widget>
+        </item>
+        <item row="14" column="1" colspan="4">
+         <widget class="QComboBox" name="cbx_aux_port"/>
+        </item>
+        <item row="5" column="3" colspan="2">
+         <widget class="QComboBox" name="cbx_averege_value"/>
+        </item>
+        <item row="6" column="0">
+         <widget class="QCheckBox" name="chk_median">
+          <property name="text">
+           <string>Median </string>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="0">
+         <widget class="QLabel" name="label_3">
+          <property name="text">
+           <string>Speed</string>
+          </property>
+         </widget>
+        </item>
+        <item row="12" column="0" colspan="5">
+         <widget class="QPushButton" name="pb_zchk">
+          <property name="text">
+           <string>Enable ZCHK</string>
           </property>
          </widget>
         </item>
         <item row="5" column="0">
-         <widget class="QCheckBox" name="checkBox_2">
+         <widget class="QLabel" name="label_6">
           <property name="text">
-           <string>Median filter</string>
+           <string>Average</string>
           </property>
          </widget>
         </item>
+        <item row="9" column="0" colspan="2">
+         <widget class="QPushButton" name="pb_zero">
+          <property name="text">
+           <string>Zero</string>
+          </property>
+         </widget>
+        </item>
+        <item row="15" column="0">
+         <widget class="QLabel" name="label_4">
+          <property name="text">
+           <string>Range</string>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="1" colspan="4">
+         <widget class="QComboBox" name="cbx_main_speed"/>
+        </item>
+        <item row="9" column="2" colspan="3">
+         <widget class="QLCDNumber" name="lcd_zero">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>50</height>
+           </size>
+          </property>
+          <property name="smallDecimalPoint">
+           <bool>true</bool>
+          </property>
+          <property name="digitCount">
+           <number>7</number>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1" colspan="4">
+         <widget class="QComboBox" name="cbx_main_range"/>
+        </item>
+        <item row="1" column="1" colspan="4">
+         <widget class="QComboBox" name="cbx_main_port"/>
+        </item>
+        <item row="6" column="1" colspan="4">
+         <widget class="QComboBox" name="cbx_median_value"/>
+        </item>
+        <item row="8" column="0" colspan="5">
+         <widget class="QCheckBox" name="chk_zero_corr">
+          <property name="text">
+           <string>Zero Correction</string>
+          </property>
+         </widget>
+        </item>
+        <item row="28" column="0" colspan="5">
+         <widget class="QPlainTextEdit" name="pte_console"/>
+        </item>
        </layout>
+      </widget>
+      <widget class="QWidget" name="tab">
+       <attribute name="title">
+        <string>Aux device</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_3"/>
       </widget>
       <widget class="QWidget" name="tab_files">
        <attribute name="title">
@@ -291,6 +346,47 @@
        </layout>
       </widget>
      </widget>
+    </item>
+    <item row="0" column="7">
+     <widget class="QGroupBox" name="gb_elapsed_time">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="title">
+       <string>Elapsed time</string>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_6">
+       <item row="0" column="0">
+        <widget class="QLCDNumber" name="lcd_time">
+         <property name="smallDecimalPoint">
+          <bool>false</bool>
+         </property>
+         <property name="digitCount">
+          <number>4</number>
+         </property>
+         <property name="intValue" stdset="0">
+          <number>11</number>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="0" column="1" colspan="6">
+     <spacer name="horizontalSpacer">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
     </item>
    </layout>
   </widget>

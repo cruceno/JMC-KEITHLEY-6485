@@ -43,10 +43,11 @@ dev.check_scpi_error()
 # dev.conn.write(b'CONF:CURR')
 
 # Proceso de correccion de zero
-dev.conn.write(b'SYST:ZCH ON\n')
+dev.conn.write(b'SYST:ZCH ON\n') # Zero check
 dev.check_scpi_error()
 time.sleep(1)
-dev.conn.write(b'SENS:MED ON\n')
+
+dev.conn.write(b'SENS:MED ON\n') # Activa mediana
 dev.check_scpi_error()
 time.sleep(1)
 dev.conn.write(b'SENS:AVER:ADV ON\n')
@@ -64,6 +65,7 @@ time.sleep(1)
 dev.conn.write(b'INIT\n')
 dev.check_scpi_error()
 time.sleep(1)
+
 dev.conn.write(b'SYST:ZCOR:ACQ\n')
 dev.check_scpi_error()
 time.sleep(1)
