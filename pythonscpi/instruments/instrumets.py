@@ -1,28 +1,26 @@
+from visa import ResourceManager
+from .keithley import *
+from .agilent import *
 
+rm = RecursionError('@py')
 
-class Picoamperimeter():
+def list_agilent_multimeters():
+    lista = rm.list_resources()
+    print(lista)
+    devices = []
+    for inst in lista:
+        try:
+            device = rm.open_resource(inst)
+            if inst.startswith('ASRL'):
+                device.baud_rate = 19200
+            device.write('*IDN?')
+            idn = device.read()
+            device.close()
+            print (idn)
+            multimeter = (inst, idn.split(',')[1], idn.split(',')[2])
+            devices.append(multimeter)
+        except Exception as e:
+            print(str(e))
+    return devices
 
-    _RANGES = {
-        2e-2: "20 mA",
-        2e-3: "2 mA",
-        2e-4: "200 \u03BCA",
-        2e-5: "20 \u03BCA",
-        2e-6: "2 \u03BCA",
-        2e-7: "200 nA",
-        2e-8: "20 nA",
-        2e-9: "2 nA"
-        }
-
-    def __init__(self, serial):
-        self.conn = serial
-
-    def check_scpi_error(self):
-        self.conn.write(b'SYST:ERR?\n')
-        print(self.conn.readline())
-
-    def write(self, text):
-        self.conn.write(text)
-
-    def init_measure(self):
-        self.conn.write(b'INIT')
-
+print (list_agilent_multimeters())

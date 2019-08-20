@@ -51,11 +51,5 @@ class MainApp (Ui_MainWindow):
     def change_widget_text_color(widget, r=255, g=255, b=255, a=100):
         widget.setStyleSheet("color: rgb({},{},{},{});".format(r, g, b, a))
 
-    @staticmethod
-    def widgetPlot(widget):
-        widget.setLayout(QVBoxLayout())
-        widget.canvas = PlotCanvas(widget, width=10, height=8)
-        widget.toolbar = NavigationToolbar(widget.canvas, widget)
-        widget.layout().addWidget(widget.toolbar)
-        widget.layout().addWidget(widget.canvas)
+
 

@@ -1,12 +1,13 @@
 import sys, os
-from PySide2.QtWidgets import QApplication
-from pythonscpi.gui.Jmc_app_main_ui import MainApp
+from PySide2.QtWidgets import QApplication, QMainWindow
 
-class JMC_Python_SCPI(MainApp):
+from pythonscpi.gui.mainapp_gui import MainApp
+
+
+class JMC_Python_SCPI(QMainWindow, MainApp):
     def __init__(self):
-        super(MainApp, self).__init__()
+        super(JMC_Python_SCPI, self).__init__()
         self.setupUi(self)
-
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

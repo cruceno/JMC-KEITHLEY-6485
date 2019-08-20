@@ -5,9 +5,7 @@ Created on 17/10/2013
 @author: Cruceno Javier
     
 '''
-import visa
-# Necesita NI-VISA instalado en el sistema. Ver documentacion PyVISA https://pyvisa.readthedocs.io
-rm = visa.ResourceManager('@py')
+
 
 class AG344XXA():
     '''
@@ -18,15 +16,15 @@ class AG344XXA():
         Constructor
         '''
         self.address = address
-        self.dev =rm.open_resource(self.address, query_delay= 0.1)
+        self.dev = rm.open_resource(self.address, query_delay=0.1)
         self.idn = self.dev.query('*IDN?')
         self.model = model if model else self.idn.split(',')[1]
-        self.id_number =id_number if id_number else self.idn.split(',')[2]
-        self.type='pyvisa'
+        self.id_number = id_number if id_number else self.idn.split(',')[2]
+        self.type = 'pyvisa'
         if self.model == '34410A':
-            self.message=True
-        else : 
-            self.message=False
+            self.message = True
+        else:
+            self.message = False
             
     def temperature_calibration(self, temp_data):
     #           Pasar de milivoltios a gracdos centigrado el valor leido por el multimetro
@@ -57,16 +55,3 @@ class AG344XXA():
             
         return Y
     
-def list_agilent_multimeters():
-    lista= rm.list_resources()
-    devices=[]
-    for inst in lista:
-        try: 
-            device=rm.open_resource(inst)
-            idn = device.query('*IDN?')
-            device.close()
-            multimeter=(inst, idn.split(',')[1], idn.split(',')[2] )
-            devices.append(multimeter)  
-        except: 
-            continue
-    return devices
