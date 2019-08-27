@@ -7,25 +7,22 @@ Created on 17/10/2013
 '''
 
 
-class AG344XXA():
+class AG34410A():
     '''
     classdocs
     '''
-    def __init__(self, address, model=None, id_number=None ):
+    def __init__(self, conn, address=None, model=None, id_number=None):
         '''
         Constructor
         '''
-        self.address = address
-        self.dev = rm.open_resource(self.address, query_delay=0.1)
+
+        self.conn = conn
         self.idn = self.dev.query('*IDN?')
         self.model = model if model else self.idn.split(',')[1]
+        self.address = address if address else self.idn.split(',')[0]
         self.id_number = id_number if id_number else self.idn.split(',')[2]
-        self.type = 'pyvisa'
-        if self.model == '34410A':
-            self.message = True
-        else:
-            self.message = False
-            
+        self.message = True
+
     def temperature_calibration(self, temp_data):
     #           Pasar de milivoltios a gracdos centigrado el valor leido por el multimetro
         # Polinomio para rango intermedio  -272 a 150 C

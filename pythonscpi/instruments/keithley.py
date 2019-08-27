@@ -13,8 +13,13 @@ class picoamperimeter6485():
         2e-9: "2 nA"
         }
 
-    def __init__(self, conn, connn_type='visa'):
+    def __init__(self, conn, address=None, model=None, id_number=None):
+
         self.conn = conn
+        self.idn = self.dev.query('*IDN?')
+        self.model = model if model else self.idn.split(',')[1]
+        self.address = address if address else self.idn.split(',')[0]
+        self.id_number = id_number if id_number else self.idn.split(',')[2]
 
     def check_scpi_error(self):
         self.conn.query('SYST:ERR?')

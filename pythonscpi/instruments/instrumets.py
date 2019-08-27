@@ -2,25 +2,24 @@ from visa import ResourceManager
 from .keithley import *
 from .agilent import *
 
-rm = RecursionError('@py')
+rm = ResourceManager('@py')
 
-def list_agilent_multimeters():
-    lista = rm.list_resources()
-    print(lista)
+def list_scpi_devices(baud_rate=19200, debug=False):
+
+    available_ports = rm.list_resources()
     devices = []
-    for inst in lista:
+    for inst in available_ports:
         try:
-            device = rm.open_resource(inst)
+            conn = rm.open_resource(inst)
             if inst.startswith('ASRL'):
-                device.baud_rate = 19200
-            device.write('*IDN?')
-            idn = device.read()
-            device.close()
-            print (idn)
-            multimeter = (inst, idn.split(',')[1], idn.split(',')[2])
-            devices.append(multimeter)
+                conn.baud_rate = baud_rate
+            idn = conn.query('*IDN?')
+            conn.close()
+            dev = (inst, idn.split(',')[1], idn.split(',')[2])
+            devices.append(dev)
         except Exception as e:
-            print(str(e))
+            if debug:
+                print(str(e))
+            else:
+                pass
     return devices
-
-print (list_agilent_multimeters())
