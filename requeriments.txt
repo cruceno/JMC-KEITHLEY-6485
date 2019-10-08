@@ -1,0 +1,12 @@
+cycler==0.10.0
+kiwisolver==1.1.0
+matplotlib==3.1.1
+numpy==1.17.2
+pyparsing==2.4.2
+pyserial==3.4
+PySide2==5.11.2
+python-dateutil==2.8.0
+pyusb==1.0.2
+PyVISA==1.10.1
+PyVISA-py==0.3.1
+six==1.12.0

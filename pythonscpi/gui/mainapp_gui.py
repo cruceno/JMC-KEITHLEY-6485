@@ -5,7 +5,6 @@ from PySide2.QtWidgets import QVBoxLayout
 from PySide2.QtCore import SIGNAL, Slot
 from pythonscpi.ploter.QtMatplotLibPlot import canvas, NavigationToolbar
 
-
 class MainApp (Ui_MainWindow):
 
     def setupUi(self, app):
@@ -28,6 +27,43 @@ class MainApp (Ui_MainWindow):
                        )
         app.setWindowIcon(icon)
 
+
+    def load_cbx_data(self):
+
+        for value in range(1,6):
+
+            self.cbx_median_rank.addItem("Rank {}".format(value), str(value))
+
+        self.cbx_aver_class.addItem("Digital Filter", "OFF")
+        self.cbx_aver_class.addItem("Advanced Filter", "ON")
+        self.cbx_aver_type.addItem("Moving filter", "MOVing")
+        self.cbx_aver_type.addItem("Repeating filter", "REPeat")
+
+        self.cbx_main_speed.addItem("0.01", 0.01)
+        self.cbx_main_speed.addItem("FAST", 0.1)
+        self.cbx_main_speed.addItem("MEDIUM", 1)
+        self.cbx_main_speed.addItem("2 NPLC", 2)
+        self.cbx_main_speed.addItem("3 NPLC", 3)
+        self.cbx_main_speed.addItem("4 NPLC", 4)
+        self.cbx_main_speed.addItem("SLOW", 5)
+
+
+        self.cbx_aux_speed.addItem("0.006", 0.006)
+        self.cbx_aux_speed.addItem("0.02", 0.02)
+        self.cbx_aux_speed.addItem("0.06", 0.06)
+        self.cbx_aux_speed.addItem("0.2", 0.2)
+        self.cbx_aux_speed.addItem("1", 1)
+        self.cbx_aux_speed.addItem("2", 2)
+        self.cbx_aux_speed.addItem("10", 10)
+        self.cbx_aux_speed.addItem("100", 100)
+
+        self.cbx_aux_range.addItem("AUTO", "AUTO")
+        self.cbx_aux_range.addItem("0.1", 0.1)
+        self.cbx_aux_range.addItem("1", 1)
+        self.cbx_aux_range.addItem("10", 10)
+        self.cbx_aux_range.addItem("100", 100)
+        self.cbx_aux_range.addItem("1000", 1000)
+
     @staticmethod
     def get_cbx_data(cbx):
         return cbx.itemData(cbx.currentIndex())
@@ -36,13 +72,20 @@ class MainApp (Ui_MainWindow):
         self.emit(SIGNAL("splashUpdate(QString, int)"),
                   message,
                   132)
-    @Slot()
+
+    @Slot(str)
     def change_messagge(self, message, duration=1000):
         self.statusbar.showMessage(message, duration)
+
 
     @staticmethod
     def change_widget_text_color(widget, r=255, g=255, b=255, a=100):
         widget.setStyleSheet("color: rgb({},{},{},{});".format(r, g, b, a))
+
+
+    @Slot()
+    def print_to_pte(self, text):
+        self.pte_console.appendPlainText(text)
 
     @staticmethod
     def widgetPlot(widget):

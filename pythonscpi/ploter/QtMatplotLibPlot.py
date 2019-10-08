@@ -20,8 +20,15 @@ class canvas(FigureCanvas):
         # Se define la grafica en coordenadas polares
         self.axes = self.fig.add_subplot(111)
         self.axes.set_facecolor('xkcd:black')
+        self.axes.xaxis.label.set_color('xkcd:mint green')
+        self.axes.yaxis.label.set_color('xkcd:mint green')
+        self.axes.tick_params(axis='both', colors='xkcd:mint green')
         # Se define una grilla
         self.axes.grid(color='xkcd:mint green', linestyle='--', linewidth=0.2, visible=True)
+        self.axes2 = self.axes.twinx()
+        self.axes2.xaxis.label.set_color('xkcd:mint green')
+        self.axes2.yaxis.label.set_color('xkcd:mint green')
+        self.axes2.tick_params(axis='y', colors='xkcd:mint green')
         # se inicializa FigureCanvas
         FigureCanvas.__init__(self, self.fig)
 
@@ -32,13 +39,16 @@ class canvas(FigureCanvas):
     def reload(self):
         self.axes.cla()
         # Se define una grilla
+        self.axes2.cla()
         self.axes.grid(True)
 
-    def plot(self, x, y):
+    def plot(self, x, y, y2=None):
 
         # Dibujar Curva
         self.reload()
-        self.axes.plot(x, y, 'ob')
+        self.axes.plot(x, y, color='xkcd:mint green')
+        if y2 is not None:
+            self.axes2.plot(x, y2, color='xkcd:pink')
         self.fig.canvas.draw()
 
 

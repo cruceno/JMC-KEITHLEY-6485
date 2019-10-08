@@ -4,6 +4,7 @@ from .agilent import *
 
 rm = ResourceManager('@py')
 
+
 def list_scpi_devices(baud_rate=19200, debug=False):
 
     available_ports = rm.list_resources()
